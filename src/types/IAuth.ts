@@ -13,7 +13,7 @@ export interface PasswordChange {
 export interface AuthLogin {
     username?: string,
     email?: string,
-    password: string,
+    password?: string,
 }
 
 export interface UserDetails{

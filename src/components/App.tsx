@@ -1,8 +1,6 @@
 import React from 'react';
 import '../css/App.css';
-import {
-  UserStatus,
-} from '../types/types';
+import {UserStatus,} from '../types/types';
 import {AppContext} from "../types/constants";
 import {Info} from "./Info";
 import {Pin} from "./Pin";
@@ -10,6 +8,7 @@ import {Menu} from "./Menu";
 import {Background} from "./Background";
 import {UserStatusButton} from "./UserStatusButton";
 import {Loading} from "./Loading";
+import LoginForm from "./LoginForm";
 
 
 const App: React.FC = () => {
@@ -25,7 +24,7 @@ const App: React.FC = () => {
       <AppContext.Provider value={{ userStatus, setUserStatusTo }}>
         <div id="app" className={getStatusClass()}>
           <Info id="app-info" />
-          <Pin />
+          <LoginForm />
           <Menu />
           <Background />
           <div id="sign-in-button-wrapper">

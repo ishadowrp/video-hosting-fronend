@@ -1,8 +1,10 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import {mediaAPI} from "../services/MediaService";
 import {authAPI} from "../services/AuthService";
+import userReducer from './reducers/UserSlice';
 
 const rootReducer = combineReducers({
+    userReducer,
     [mediaAPI.reducerPath]: mediaAPI.reducer,
     [authAPI.reducerPath]: authAPI.reducer,
 })
@@ -12,7 +14,7 @@ export const setupStore = () => {
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware()
-                .concat(mediaAPI.middleware, authAPI.middleware)
+                .concat(mediaAPI.middleware, authAPI.middleware),
     })
 }
 
