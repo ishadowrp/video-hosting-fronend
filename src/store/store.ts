@@ -2,9 +2,11 @@ import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import {mediaAPI} from "../services/MediaService";
 import {authAPI} from "../services/AuthService";
 import userReducer from './reducers/UserSlice';
+import appReducer from './reducers/AppSlice';
 
 const rootReducer = combineReducers({
     userReducer,
+    appReducer,
     [mediaAPI.reducerPath]: mediaAPI.reducer,
     [authAPI.reducerPath]: authAPI.reducer,
 })

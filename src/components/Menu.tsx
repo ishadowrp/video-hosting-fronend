@@ -28,15 +28,6 @@ export const Menu: React.FC = () => {
                         </div>
                     </div>
                     <QuickNav />
-                    <a
-                        id="youtube-link"
-                        className="clear-button"
-                        href="https://www.youtube.com/c/Hyperplexed?sub_confirmation=1"
-                        target="_blank"
-                    >
-                        <i className="fa-brands fa-youtube" />
-                        <span>Hyperplexed</span>
-                    </a>
                     <Weather />
                     <Restaurants />
                     <Tools />

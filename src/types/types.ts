@@ -6,6 +6,10 @@ export enum UserStatus {
     VerifyingLogIn = "Verifying Log In"
 }
 
+export interface FormStatusType {
+    status: UserStatus,
+}
+
 export enum Default {
     PIN = "1234"
 }

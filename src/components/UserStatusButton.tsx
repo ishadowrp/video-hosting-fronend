@@ -1,21 +1,25 @@
 import React from "react";
 import {IUserStatusButton} from "../types/types";
-import {AppContext} from "../types/constants";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {appSlice} from "../store/reducers/AppSlice";
 
 export const UserStatusButton: React.FC<IUserStatusButton> = (
     props: IUserStatusButton
 ) => {
-    const { userStatus, setUserStatusTo } = React.useContext(AppContext);
+    const {status} = useAppSelector(state => state.appReducer)
+    const dispatch = useAppDispatch();
+    const {setStatus} = appSlice.actions;
 
     const handleOnClick = (): void => {
-        setUserStatusTo(props.userStatus);
+        console.log(props.userStatus)
+        dispatch(setStatus(props.userStatus));
     };
 
     return (
         <button
             id={props.id}
             className="user-status-button clear-button"
-            disabled={userStatus === props.userStatus}
+            disabled={status === props.userStatus}
             type="button"
             onClick={handleOnClick}
         >

@@ -1,13 +1,16 @@
 import React from "react";
 import {UserStatus} from "../types/types";
-import {AppContext} from "../types/constants";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {appSlice} from "../store/reducers/AppSlice";
 
 export const Background: React.FC = () => {
-    const { userStatus, setUserStatusTo } = React.useContext(AppContext);
+    const {status} = useAppSelector(state => state.appReducer)
+    const dispatch = useAppDispatch();
+    const {setStatus} = appSlice.actions;
 
     const handleOnClick = (): void => {
-        if (userStatus === UserStatus.LoggedOut) {
-            setUserStatusTo(UserStatus.LoggingIn);
+        if (status === UserStatus.LoggedOut) {
+            dispatch(setStatus(UserStatus.LoggedOut));
         }
     };
 
