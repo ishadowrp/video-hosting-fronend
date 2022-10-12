@@ -1,5 +1,5 @@
 # video-hosting-fronend
-Технологический стэк: React, Redux ToolKit, React Router, React-Toastify, React Use Websocket
+Технологический стэк: React, Redux ToolKit, React Router, React-Toastify, React Use Websocket, React Simple Star Rating
 
 Так же есть возможность подключения еще и сервиса погоды. Функциональные компоненты сделаны и настроены необходимо только подключить API. Сейчас работают в демо режиме.
 
