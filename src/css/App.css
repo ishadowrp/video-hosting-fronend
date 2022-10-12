@@ -54,7 +54,7 @@ body::-webkit-scrollbar {
   height: 4px;
   width: 4px;
 }
-body input, body h1, body h3, body span {
+body h1, body h3, body span {
   color: #5a5a5a;
   font-family: "Rubik", sans-serif;
   font-weight: 400;
@@ -78,6 +78,23 @@ body input, body h1, body h3, body span {
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+.clear-button-input {
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  /*1px solid rgba(255, 255, 255, 0);*/
+  border-radius: 100px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0);
+  cursor: pointer;
+  padding: 0 !important;
+}
+.clear-button-input:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
 #app {
   background-color: #1e1e1e;
 }
@@ -276,6 +293,33 @@ body input, body h1, body h3, body span {
   width: 100%;
   z-index: 3;
 }
+
+#app .nav-bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  overflow: auto;
+  padding-bottom: 5px;
+  width: 100%;
+  z-index: 3;
+}
+
+#app .nav-bar .quick-nav-item-label {
+  color: #f5f5f5;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+body input {
+  color: #f5f5f5;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+#app .nav-bar .quick-nav-item {
+  padding: 10px 20px;
+}
+
 #app #quick-nav .quick-nav-item {
   padding: 10px 20px;
 }
@@ -285,6 +329,7 @@ body input, body h1, body h3, body span {
 #app #quick-nav .quick-nav-item .quick-nav-item-label {
   color: #f5f5f5;
   text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
 }
 #app #youtube-link {
   align-items: center;
@@ -346,13 +391,13 @@ body input, body h1, body h3, body span {
 #app #restaurants-section .menu-section-content .restaurant-card:hover .restaurant-card-content .restaurant-card-content-items {
   margin-bottom: 30px;
 }
-#app #restaurants-section .menu-section-content .restaurant-card .restaurant-card-content {
+#app #media-section .menu-section-content .restaurant-card .restaurant-card-content {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
   border-radius: 10px;
   height: 100%;
   width: 100%;
 }
-#app #restaurants-section .menu-section-content .restaurant-card .restaurant-card-content .restaurant-card-content-items {
+#app #media-section .menu-section-content .restaurant-card .restaurant-card-content .restaurant-card-content-items {
   bottom: 0px;
   display: flex;
   flex-direction: column;
@@ -362,11 +407,41 @@ body input, body h1, body h3, body span {
   text-align: right;
   transition: margin 250ms;
 }
-#app #restaurants-section .menu-section-content .restaurant-card .restaurant-card-content .restaurant-card-content-items .restaurant-card-title {
+#app #media-section .menu-section-content .restaurant-card .restaurant-card-content .restaurant-card-content-items .restaurant-card-title {
   color: #f5f5f5;
   font-size: 1.5em;
 }
-#app #restaurants-section .menu-section-content .restaurant-card .restaurant-card-content .restaurant-card-content-items .restaurant-card-desc {
+#app #media-section .menu-section-content .restaurant-card .restaurant-card-content .restaurant-card-content-items .restaurant-card-desc {
+  color: #42a5f5;
+  font-size: 0.9em;
+}
+#app #media-section .menu-section-content .restaurant-card:hover {
+  transform: translateY(-5px);
+}
+#app #media-section .menu-section-content .restaurant-card:hover .restaurant-card-content .restaurant-card-content-items {
+  margin-bottom: 30px;
+}
+#app #media-section .menu-section-content .restaurant-card .restaurant-card-content {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+}
+#app #media-section .menu-section-content .restaurant-card .restaurant-card-content .restaurant-card-content-items {
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  position: absolute;
+  right: 0px;
+  text-align: right;
+  transition: margin 250ms;
+}
+#app #media-section .menu-section-content .restaurant-card .restaurant-card-content .restaurant-card-content-items .restaurant-card-title {
+  color: #f5f5f5;
+  font-size: 1.5em;
+}
+#app #media-section .menu-section-content .restaurant-card .restaurant-card-content .restaurant-card-content-items .restaurant-card-desc {
   color: #42a5f5;
   font-size: 0.9em;
 }
@@ -575,7 +650,7 @@ body input, body h1, body h3, body span {
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   transition: transform 250ms;
 }
-#app #app-pin-wrapper {
+#app #app-pin-wrapper, #app #app-profile-wrapper {
   left: 50%;
   opacity: 0;
   pointer-events: none;
@@ -585,23 +660,23 @@ body input, body h1, body h3, body span {
   transition: opacity 250ms, transform 250ms;
   z-index: 2;
 }
-#app #app-pin-wrapper .app-pin-label {
+#app #app-pin-wrapper .app-pin-label, #app #app-profile-wrapper .app-pin-label {
   color: #f5f5f5;
   font-size: 0.9em;
   margin: 10px;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
-#app #app-pin-wrapper .app-pin-label #app-pin-cancel-text {
+#app #app-pin-wrapper .app-pin-label #app-pin-cancel-text, #app #app-profile-wrapper .app-pin-label #app-profile-cancel-text {
   cursor: pointer;
   margin-left: 2px;
 }
-#app #app-pin-wrapper .app-pin-label #app-pin-cancel-text:hover {
+#app #app-pin-wrapper .app-pin-label #app-pin-cancel-text:hover, #app #app-profile-wrapper .app-pin-label #app-profile-cancel-text:hover {
   text-decoration: underline;
 }
-#app #app-pin-wrapper .app-pin-label #app-pin-error-text {
+#app #app-pin-wrapper .app-pin-label #app-pin-error-text, #app-profile-wrapper .app-pin-label #app-profile-error-text {
   color: #ef5350;
 }
-#app #app-pin-wrapper .app-pin-hidden-input {
+#app #app-pin-wrapper .app-pin-hidden-input, #app #app-profile-wrapper .app-pin-hidden-input {
   background-color: transparent;
   border: none;
   height: 0px;
@@ -610,11 +685,11 @@ body input, body h1, body h3, body span {
   position: absolute;
   width: 0px;
 }
-#app #app-pin-wrapper #app-pin {
+#app #app-pin-wrapper #app-pin, #app #app-profile-wrapper #app-profile {
   display: flex;
   gap: 10px;
 }
-#app #app-pin-wrapper #app-pin .app-pin-digit {
+#app #app-pin-wrapper #app-pin .app-pin-digit, #app #app-profile-wrapper #app-profile .app-pin-digit {
   align-items: center;
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -628,14 +703,14 @@ body input, body h1, body h3, body span {
   transition: background-color 250ms, border-color 250ms;
   width: 60px;
 }
-#app #app-pin-wrapper #app-pin .app-pin-digit:after, #app #app-pin-wrapper #app-pin .app-pin-digit:before {
+#app #app-pin-wrapper #app-pin .app-pin-digit:after, #app #app-pin-wrapper #app-pin .app-pin-digit:before, #app #app-profile-wrapper #app-profile .app-pin-digit:after, #app #app-profile-wrapper #app-profile .app-pin-digit:before {
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.06);
   content: "";
   position: absolute;
   transition: opacity 250ms, transform 250ms;
   z-index: 2;
 }
-#app #app-pin-wrapper #app-pin .app-pin-digit:before {
+#app #app-pin-wrapper #app-pin .app-pin-digit:before, #app #app-profile-wrapper #app-profile .app-pin-digit:before {
   background-color: #f5f5f5;
   border-radius: 10px;
   bottom: 0px;
@@ -645,7 +720,7 @@ body input, body h1, body h3, body span {
   transform: translateY(0px);
   width: 70%;
 }
-#app #app-pin-wrapper #app-pin .app-pin-digit:after {
+#app #app-pin-wrapper #app-pin .app-pin-digit:after, #app #app-profile-wrapper #app-profile .app-pin-digit:after {
   background-color: #f5f5f5;
   border-radius: 20px;
   height: 20px;
@@ -653,23 +728,24 @@ body input, body h1, body h3, body span {
   transform: scale(0.25);
   width: 20px;
 }
-#app #app-pin-wrapper #app-pin .app-pin-digit.focused:before {
+#app #app-pin-wrapper #app-pin .app-pin-digit.focused:before, #app #app-profile-wrapper #app-profile .app-pin-digit.focused:before {
   animation: blink 2s ease-in-out infinite;
   opacity: 1;
   transform: translateY(-10px);
 }
-#app #app-pin-wrapper #app-pin .app-pin-digit.hidden:after {
+#app #app-pin-wrapper #app-pin .app-pin-digit.hidden:after, #app #app-profile-wrapper #app-profile .app-pin-digit.hidden:after {
   opacity: 1;
   transform: scale(1);
 }
-#app #app-pin-wrapper #app-pin .app-pin-digit.hidden .app-pin-digit-value {
+#app #app-pin-wrapper #app-pin .app-pin-digit.hidden .app-pin-digit-value, #app #app-profile-wrapper #app-profile .app-pin-digit.hidden .app-pin-digit-value {
   opacity: 0;
   transform: scale(0.25);
 }
-#app #app-pin-wrapper #app-pin .app-pin-digit .app-pin-digit-value {
+#app #app-pin-wrapper #app-pin .app-pin-digit .app-pin-digit-value, #app #app-profile-wrapper #app-profile .app-pin-digit .app-pin-digit-value {
   color: #f5f5f5;
   transition: opacity 250ms, transform 250ms;
 }
+
 #app #app-menu {
   height: 100vh;
   overflow: hidden;

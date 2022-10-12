@@ -3,7 +3,13 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 
 const initialState: AuthUserDetails = {
-    details: { username: 'anonymous'},
+    details: {
+        username: 'anonymous',
+        pk: 0,
+        first_name: '',
+        last_name: '',
+        telephone: '',
+    },
     token: '',
 }
 

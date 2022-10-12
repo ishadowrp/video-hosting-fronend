@@ -1,6 +1,7 @@
 import {Default, IAppContext, ILogInUtility, INumberUtility, IPosition, ITimeUtility} from "./types";
 import React from "react";
 
+
 export const defaultPosition = (): IPosition => ({
     left: 0,
     x: 0

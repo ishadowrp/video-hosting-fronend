@@ -8,17 +8,8 @@ import {
     PasswordChange,
     UserDetails
 } from "../types/IAuth";
+import {readCookie} from "./Service";
 
-function readCookie(name:string) {
-    let nameEQ = name + "=";
-    let ca = document.cookie.split(';');
-    for(let i=0;i < ca.length;i++) {
-        let c = ca[i];
-        while (c.charAt(0)===' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
 
 export const authAPI = createApi({
     reducerPath: 'authAPI',
@@ -47,7 +38,7 @@ export const authAPI = createApi({
             query: (auth_data) => ({
                 url: `/api/v1/dj-rest-auth/password/change/`,
                 method: 'POST',
-                params: {
+                headers: {
                     Authorization: 'Token '+auth_data.token,
                 },
                 body: auth_data.auth_data,
@@ -75,7 +66,7 @@ export const authAPI = createApi({
         getUser: build.query<UserDetails, string>({
             query: (token) => ({
                 url: `/api/v1/dj-rest-auth/user/`,
-                params: {
+                headers: {
                     Authorization: 'Token '+token,
                 }
             }),
@@ -84,7 +75,7 @@ export const authAPI = createApi({
         patchUser: build.mutation<UserDetails, AuthUserDetails>({
             query: (auth_data) => ({
                 url: `/api/v1/dj-rest-auth/user/`,
-                params: {
+                headers: {
                     Authorization: 'Token '+auth_data.token,
                 },
                 body: auth_data.details,

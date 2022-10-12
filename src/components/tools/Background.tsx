@@ -1,7 +1,7 @@
 import React from "react";
-import {UserStatus} from "../types/types";
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {appSlice} from "../store/reducers/AppSlice";
+import {UserStatus} from "../../types/types";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {appSlice} from "../../store/reducers/AppSlice";
 
 export const Background: React.FC = () => {
     const {status} = useAppSelector(state => state.appReducer)

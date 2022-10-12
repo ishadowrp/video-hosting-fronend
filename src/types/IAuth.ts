@@ -10,14 +10,6 @@ export interface PasswordChange {
     token: string,
 }
 
-interface non_field_error {
-    text: string,
-}
-
-export interface LoginErrors {
-    data: {non_field_errors: non_field_error[]},
-}
-
 export interface AuthLogin {
     username?: string,
     email?: string,
@@ -25,11 +17,13 @@ export interface AuthLogin {
 }
 
 export interface UserDetails{
-    id?: string,
+    pk?: number,
     username: string,
     email?: string,
     first_name?: string,
     last_name?: string,
+    telephone?: string,
+    avatarUrl?: string
 }
 
 export interface AuthUserDetails {

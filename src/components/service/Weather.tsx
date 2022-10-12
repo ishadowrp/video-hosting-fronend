@@ -1,8 +1,8 @@
 import React from "react";
-import {WeatherType} from "../types/types";
+import {WeatherType} from "../../types/types";
 import classNames from "classnames";
-import {N} from "../types/constants";
-import {MenuSection} from "./MenuSection";
+import {N} from "../../types/constants";
+import {MenuSection} from "../navigations/MenuSection";
 
 export const Weather: React.FC = () => {
     const getDays = (): JSX.Element[] => {

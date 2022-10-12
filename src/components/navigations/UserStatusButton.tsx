@@ -1,7 +1,7 @@
 import React from "react";
-import {IUserStatusButton} from "../types/types";
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {appSlice} from "../store/reducers/AppSlice";
+import {IUserStatusButton} from "../../types/types";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {appSlice} from "../../store/reducers/AppSlice";
 
 export const UserStatusButton: React.FC<IUserStatusButton> = (
     props: IUserStatusButton

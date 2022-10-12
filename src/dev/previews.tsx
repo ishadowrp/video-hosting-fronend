@@ -3,10 +3,10 @@ import {ComponentPreview, Previews} from '@react-buddy/ide-toolbox';
 import {PaletteTree} from './palette';
 import App from "../components/App";
 import {Pin} from "../components/Pin";
-import {Menu} from "../components/Menu";
-import {QuickNav} from "../components/QuickNav";
-import {LoginForm} from "../components/LoginFrom";
-import LoginRegisterForm from "../components/LoginRegisterForm";
+import {Menu} from "../components/navigations/Menu";
+import {QuickNav} from "../components/navigations/QuickNav";
+import {LoginForm} from "../components/login_registration/LoginFrom";
+import LoginRegisterForm from "../components/login_registration/LoginRegisterForm";
 
 const ComponentPreviews = () => {
     return (

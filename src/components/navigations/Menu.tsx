@@ -1,13 +1,10 @@
 import React from "react";
-import {UserStatus} from "../types/types";
-import {Info} from "./Info";
-import {Reminder} from "./Reminder";
+import {UserStatus} from "../../types/types";
+import {Info} from "../service/Info";
+import {Reminder} from "../service/Reminder";
 import {UserStatusButton} from "./UserStatusButton";
 import {QuickNav} from "./QuickNav";
-import {Weather} from "./Weather";
-import {Tools} from "./Tools";
-import {Restaurants} from "./Restaurants";
-import {Movies} from "./Movies";
+import {Outlet} from "react-router-dom";
 
 export const Menu: React.FC = () => {
     return (
@@ -28,10 +25,11 @@ export const Menu: React.FC = () => {
                         </div>
                     </div>
                     <QuickNav />
-                    <Weather />
-                    <Restaurants />
-                    <Tools />
-                    <Movies />
+                    <Outlet />
+                    {/*<Weather />*/}
+                    {/*<Restaurants />*/}
+                    {/*<Tools />*/}
+                    {/*<Movies />*/}
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import React from "react";
-import {IScrollableComponentProps, IScrollableComponentState} from "../types/types";
+import {IScrollableComponentProps, IScrollableComponentState} from "../../types/types";
 import classNames from "classnames";
-import {defaultPosition} from "../types/constants";
+import {defaultPosition} from "../../types/constants";
 
 export const ScrollableComponent: React.FC<IScrollableComponentProps> = (
     props: IScrollableComponentProps

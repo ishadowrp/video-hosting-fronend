@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import {MenuSection} from "./MenuSection";
+import {MenuSection} from "../navigations/MenuSection";
 
 export const Tools: React.FC = () => {
     const getTools = (): JSX.Element[] => {

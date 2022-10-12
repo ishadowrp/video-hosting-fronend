@@ -3,12 +3,16 @@ import {mediaAPI} from "../services/MediaService";
 import {authAPI} from "../services/AuthService";
 import userReducer from './reducers/UserSlice';
 import appReducer from './reducers/AppSlice';
+import rateReducer from './reducers/RateSlice';
+import {profileAPI} from "../services/ProfileService";
 
 const rootReducer = combineReducers({
     userReducer,
     appReducer,
+    rateReducer,
     [mediaAPI.reducerPath]: mediaAPI.reducer,
     [authAPI.reducerPath]: authAPI.reducer,
+    [profileAPI.reducerPath]: profileAPI.reducer,
 })
 
 export const setupStore = () => {
@@ -16,7 +20,7 @@ export const setupStore = () => {
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware()
-                .concat(mediaAPI.middleware, authAPI.middleware),
+                .concat(mediaAPI.middleware, authAPI.middleware, profileAPI.middleware),
     })
 }
 

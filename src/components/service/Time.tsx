@@ -1,5 +1,5 @@
 import React from "react";
-import {T, useCurrentDateEffect} from "../types/constants";
+import {T, useCurrentDateEffect} from "../../types/constants";
 
 export const Time: React.FC = () => {
     const date: Date = useCurrentDateEffect();

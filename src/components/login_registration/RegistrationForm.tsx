@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {authAPI} from "../services/AuthService";
-import {useAppDispatch} from "../hooks/redux";
-import {userSlice} from "../store/reducers/UserSlice";
-import {appSlice} from "../store/reducers/AppSlice";
-import {UserStatus} from "../types/types";
-import {AuthReg} from "../types/IAuth";
+import {authAPI} from "../../services/AuthService";
+import {useAppDispatch} from "../../hooks/redux";
+import {userSlice} from "../../store/reducers/UserSlice";
+import {appSlice} from "../../store/reducers/AppSlice";
+import {UserStatus} from "../../types/types";
+import {AuthReg} from "../../types/IAuth";
 
 export function RegistrationFrom() {
 

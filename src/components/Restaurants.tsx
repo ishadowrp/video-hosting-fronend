@@ -1,5 +1,5 @@
 import React from "react";
-import {MenuSection} from "./MenuSection";
+import {MenuSection} from "./navigations/MenuSection";
 
 export const Restaurants: React.FC = () => {
     const getRestaurants = (): JSX.Element[] => {

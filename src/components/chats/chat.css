@@ -1,0 +1,44 @@
+.input-message {
+    color: #5a5a5a;
+    font-family: "Rubik", sans-serif;
+    font-size: large;
+    font-weight: 600;
+    margin:0;
+    padding: 7px 20px;
+    margin-right:10px;
+    width: 70%;
+    border-radius: 20px;
+}
+
+.btn-send-message {
+    height: 100%;
+}
+
+.send-message {
+    padding: 10px 20px;
+    color: #f5f5f5;
+    text-shadow: 0px 0px 2px rgb(0 0 0 / 10%);
+    text-decoration: none;
+}
+
+.chat-history-box {
+    backdrop-filter: blur(3px);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    box-shadow: 2px 2px 2px rgb(0 0 0 / 10%);
+    padding: 10px 30px;
+    margin-top:10px;
+    color: #f5f5f5;
+    text-shadow: 0px 0px 2px rgb(0 0 0 / 10%);
+    text-decoration: none;
+}
+
+.chat-message-username {
+    margin-left: 10px;
+    color: #42a5f5;
+}
+
+.chat-message-date {
+    color: #42a5f5;
+}

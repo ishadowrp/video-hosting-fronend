@@ -1,5 +1,5 @@
 import React from "react";
-import {IInfoProps} from "../types/types";
+import {IInfoProps} from "../../types/types";
 import {Time} from "./Time";
 import {WeatherSnap} from "./WeatherSnap";
 

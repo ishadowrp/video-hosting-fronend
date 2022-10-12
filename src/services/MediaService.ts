@@ -1,52 +1,116 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
-import {IMedia, Media, SearchService} from "../types/IMedia";
-
+import {
+    IMedia,
+    MediaRating,
+    MediaUnit,
+    SearchService,
+    SimpleMediaRequest,
+    MediaRatingRequest,
+    CommentsRequest, CommentResponse
+} from "../types/IMedia";
+import {readCookie} from "./Service";
 
 export const mediaAPI = createApi({
     reducerPath: 'mediaAPI',
-    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8000'}),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://localhost:8000',
+        prepareHeaders: (headers) => {
+            const crfToken = readCookie('csrftoken');
+
+            // If we have a token set in state, let's assume that we should be passing it.
+            if (crfToken) {
+                headers.set('X-CSRFToken', `${crfToken}`)
+            }
+
+            return headers
+        },
+    }),
     tagTypes: ['Media'],
     endpoints: (build) => ({
-        fetchAllMedia: build.query<Media[], string>({
+        fetchAllMedia: build.query<MediaUnit[], string>({
             query: (token) => ({
                 url: `/api/v1/media/`,
-                params: {
+                headers: {
                     Authorization: 'Token '+token,
                 }
             }),
             providesTags: result => ['Media']
         }),
-        fetchLast10: build.query<Media[], string>({
+        fetchLast10: build.query<MediaUnit[], string>({
             query: (token) => ({
                 url: `/api/v1/media/order?ordering=-date_posted`,
-                params: {
+                headers: {
                     Authorization: 'Token '+token,
                 }
             }),
             providesTags: result => ['Media']
         }),
-        fetchMostPopular: build.query<Media[], string>({
+        fetchMostPopular: build.query<MediaUnit[], string>({
             query: (token) => ({
                 url: `/api/v1/media/order?ordering=-views_count`,
-                params: {
+                headers: {
                     Authorization: 'Token '+token,
                 }
             }),
             providesTags: result => ['Media']
         }),
-        fetchSearch: build.query<Media[], SearchService>({
+        fetchSearch: build.query<MediaUnit[], SearchService>({
             query: (searchData) => ({
                 url: `/api/v1/media/search?media=${searchData.searchString}`,
-                params: {
+                headers: {
                     Authorization: 'Token '+searchData.token,
                 }
             }),
             providesTags: result => ['Media']
         }),
-        createMedia: build.mutation<Media, IMedia>({
+        getCommentsByMedia: build.query<CommentResponse[], CommentsRequest>({
+            query: (request) => ({
+                url: `/api/v1/media/comments?media=${request.media}`,
+                headers: {
+                    Authorization: 'Token '+request.token,
+                }
+            }),
+            providesTags: result => ['Media']
+        }),
+        postMediaRating: build.mutation<MediaRating, MediaRating>({
+            query: (rating, ) => ({
+                url: `/api/v1/rating/`,
+                headers: {
+                    Authorization: 'Token '+rating.token,
+                },
+                method: 'POST',
+                body: rating,
+            }),
+            invalidatesTags: ['Media']
+        }),
+        updateMediaRating: build.mutation<MediaRating, MediaRating>({
+            query: (data, ) => ({
+                url: `/api/v1/rating/`,
+                headers: {
+                    Authorization: 'Token '+data.token,
+                },
+                method: 'PUT',
+                body: data,
+            }),
+            invalidatesTags: ['Media']
+        }),
+        getMediaRating: build.query<MediaRating, MediaRatingRequest>({
+            query: (rating, ) => ({
+                url: `/api/v1/rating/`,
+                headers: {
+                    Authorization: 'Token '+rating.token,
+                },
+                params: {
+                    media: rating.media,
+                    author: rating.author,
+                },
+            }),
+            providesTags: ['Media']
+        }),
+        createMedia: build.mutation<MediaUnit, IMedia>({
             query: (media, ) => ({
                 url: `/api/v1/media/`,
-                params: {
+                headers: {
                     Authorization: 'Token '+media.token,
                 },
                 method: 'POST',
@@ -54,19 +118,19 @@ export const mediaAPI = createApi({
             }),
             invalidatesTags: ['Media']
         }),
-        getMedia: build.query<Media, IMedia>({
+        getMedia: build.query<MediaUnit, SimpleMediaRequest>({
             query: (media, ) => ({
-                url: `/api/v1/media/${media.media.id}`,
-                params: {
+                url: `/api/v1/media/${media.id}`,
+                headers: {
                     Authorization: 'Token '+media.token,
                 },
             }),
             providesTags: result => ['Media']
         }),
-        updateMedia: build.mutation<Media, IMedia>({
+        updateMedia: build.mutation<MediaUnit, IMedia>({
             query: (media, ) => ({
                 url: `/api/v1/media/${media.media.id}`,
-                params: {
+                headers: {
                     Authorization: 'Token '+media.token,
                 },
                 method: 'PUT',
@@ -74,10 +138,10 @@ export const mediaAPI = createApi({
             }),
             invalidatesTags: ['Media']
         }),
-        deleteMedia: build.mutation<Media, IMedia>({
+        deleteMedia: build.mutation<MediaUnit, IMedia>({
             query: (media, ) => ({
                 url: `/api/v1/media/${media.media.id}`,
-                params: {
+                headers: {
                     Authorization: 'Token '+media.token,
                 },
                 method: 'DELETE',

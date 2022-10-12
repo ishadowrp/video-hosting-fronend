@@ -1,5 +1,5 @@
 import React from "react";
-import {N} from "../types/constants";
+import {N} from "../../types/constants";
 
 export const WeatherSnap: React.FC = () => {
     const [temperature] = React.useState<number>(N.rand(65, 85));

@@ -1,6 +1,6 @@
 import React from "react";
-import {IMenuSectionProps} from "../types/types";
-import {ScrollableComponent} from "./ScrollableComponent";
+import {IMenuSectionProps} from "../../types/types";
+import {ScrollableComponent} from "../tools/ScrollableComponent";
 
 export const MenuSection: React.FC<IMenuSectionProps> = (props: IMenuSectionProps) => {
     const getContent = (): JSX.Element => {

@@ -1,0 +1,40 @@
+.notifications-counter-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #ef5350;
+    color: #f5f5f5;
+    font-size: smaller;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    justify-content: center;
+}
+
+.block-on {
+    display: block;
+}
+
+.block-off {
+    display: none;
+}
+
+.search-button {
+    padding:5px 5px 5px 15px;
+}
+
+.search-block {
+    display: flex;
+    padding: 0 !important;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+    justify-content: center;
+    min-height: 100%;
+}
+.search-input {
+    height: 100% !important;
+    margin-right: 0 !important;
+}

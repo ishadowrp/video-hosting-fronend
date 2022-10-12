@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
-import {authAPI} from "../services/AuthService";
-import {useAppDispatch} from "../hooks/redux";
-import {AuthLogin} from "../types/IAuth";
-import {UserStatus} from "../types/types";
-import {userSlice} from "../store/reducers/UserSlice";
-import {appSlice} from "../store/reducers/AppSlice";
+import React, {useEffect, useState} from 'react';
+import {authAPI} from "../../services/AuthService";
+import {useAppDispatch} from "../../hooks/redux";
+import {AuthLogin} from "../../types/IAuth";
+import {UserStatus} from "../../types/types";
+import {userSlice} from "../../store/reducers/UserSlice";
+import {appSlice} from "../../store/reducers/AppSlice";
 
 
 export function LoginForm() {
 
     const [loginUser, {data, error}] = authAPI.useLoginUserMutation();
+    const {data: detailsData} = authAPI.useGetUserQuery((data && data.key)?data.key:'');
 
     let [logUsername, setUsername] = useState<string>('');
     let [logPassword, setPassword] = useState<string>('');
@@ -40,11 +41,15 @@ export function LoginForm() {
         dispatch(setStatus(UserStatus.LoggedOut));
     }
 
-    if (data) {
-        dispatch(setToken(data.key));
-        dispatch(setUserDetails({username: logUsername}))
-        dispatch(setStatus(UserStatus.LoggedIn));
-    }
+    useEffect(() => {
+        if (data) {
+            dispatch(setToken(data.key));
+            if (detailsData) {
+                dispatch(setUserDetails(detailsData));
+            }
+            dispatch(setStatus(UserStatus.LoggedIn));
+        }}
+    )
 
     let errorMessage = '';
 
