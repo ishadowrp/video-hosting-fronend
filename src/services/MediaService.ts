@@ -6,7 +6,7 @@ import {
     SearchService,
     SimpleMediaRequest,
     MediaRatingRequest,
-    CommentsRequest, CommentResponse
+    CommentsRequest, CommentResponse, SearchMediaByAuthor
 } from "../types/IMedia";
 import {readCookie} from "./Service";
 
@@ -59,6 +59,15 @@ export const mediaAPI = createApi({
                 url: `/api/v1/media/search?media=${searchData.searchString}`,
                 headers: {
                     Authorization: 'Token '+searchData.token,
+                }
+            }),
+            providesTags: result => ['Media']
+        }),
+        getMediaByAuthor: build.query<MediaUnit[], SearchMediaByAuthor>({
+            query: (request) => ({
+                url: `/api/v1/media/author?author=${request.author}`,
+                headers: {
+                    Authorization: 'Token '+request.token,
                 }
             }),
             providesTags: result => ['Media']

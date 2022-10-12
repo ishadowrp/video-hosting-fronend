@@ -58,6 +58,12 @@ export interface SearchService {
     token?: string,
 }
 
+export interface SearchMediaByAuthor {
+    author: string|undefined,
+    token?: string,
+}
+
+
 export interface SimpleMediaRequest {
     token: string,
     id: string,

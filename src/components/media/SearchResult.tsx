@@ -14,7 +14,7 @@ export const SearchResult:React.FC = () => {
     const getMedia = (): JSX.Element => {
         return (
             <div className="movie-cards">
-                {medias && medias.slice(0,9).map((media:MediaUnit) =>
+                {medias && medias.map((media:MediaUnit) =>
                     <Media key={media.id} media={media}/>)}
             </div>
         )
