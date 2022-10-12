@@ -9,6 +9,11 @@ export type MediaUnit = {
     current_rating?: number,
 }
 
+export interface SearchInitialState {
+    searchText: string,
+    searchResult: MediaUnit[]
+}
+
 export interface MediaFC {
     key?: number,
     media: MediaUnit,

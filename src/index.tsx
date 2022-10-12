@@ -15,6 +15,7 @@ import {NoMatch} from "./components/service/NoMatch";
 import {MostPopular} from "./components/media/MostPopular";
 import {MediaElement} from "./components/media/MediaElement";
 import {Last10} from "./components/media/Last10";
+import {SearchResult} from "./components/media/SearchResult";
 
 
 const root = ReactDOM.createRoot(
@@ -34,6 +35,7 @@ root.render(
                         <Route path="my_media" element={<MyMedia />}/>
                         <Route path="private_chat" element={<PrivateChats />}/>
                     </Route>
+                    <Route path="searchResult" element={<SearchResult />}/>
                     <Route path="last10" element={<Last10 />}/>
                     <Route path="most_popular" element={<MostPopular />}/>
                     <Route path="media" element={<MediaElement />}>
