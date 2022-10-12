@@ -25,6 +25,7 @@ export interface IMedia {
 }
 
 export interface MediaRating{
+    id?: number,
     media: number,
     author: number,
     rating: number,

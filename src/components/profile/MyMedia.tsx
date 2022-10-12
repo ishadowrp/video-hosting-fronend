@@ -25,13 +25,13 @@ export const MyMedia:React.FC = () => {
         <React.Fragment>
             <div className="nav-bar add-new-media-box">
                 <div className='quick-nav-item clear-button'>
-                    <Link to='add-new-media' className='quick-nav-item-label'>Add new media</Link>
+                    <Link to='add_new_media' className='quick-nav-item-label'>Add new media</Link>
                 </div>
             </div>
             <MenuSection
                 icon="fa-regular fa-pot-food"
                 id="media-section"
-                title="My media"
+                title="My media..."
             >
                 {medias&&medias.length ===0?<h4 className='quick-nav-item-label'>No result founds!</h4>:getMedia()}
             </MenuSection>

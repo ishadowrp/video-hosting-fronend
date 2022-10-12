@@ -6,7 +6,7 @@ export function MediaByAuthor(props:MediaFC) {
 
     return (
         <div className="my-media-list-item">
-            <Link to={`/media/${props.media.id}`} className='movie-card'>
+            <div className='movie-card'>
                 <video controls width="100%" className="movie-card-unit background-image">
                     <source src={props.media.media} type="video/mp4" className='restaurant-card-content-items'/>
                 </video>
@@ -17,10 +17,12 @@ export function MediaByAuthor(props:MediaFC) {
                     </div>
                     <div className="movie-card-title">{props.media.title}</div>
                 </div>
-            </Link>
-            <div className='my-media-buttons'>
-                <button>Delete</button>
-                <button>Edit</button>
+            </div>
+            <div className='nav-bar my-media-buttons'>
+                <button className='quick-nav-item clear-button quick-nav-item-label'>Delete</button>
+                <div className='quick-nav-item clear-button'>
+                    <Link to={`edit_media/${props.media.id}`} className='quick-nav-item-label'>Edit</Link>
+                </div>
             </div>
         </div>
     )

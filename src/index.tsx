@@ -16,6 +16,8 @@ import {MostPopular} from "./components/media/MostPopular";
 import {MediaElement} from "./components/media/MediaElement";
 import {Last10} from "./components/media/Last10";
 import {SearchResult} from "./components/media/SearchResult";
+import {PostMedia} from "./components/media/PostMedia";
+import {EditMedia} from "./components/media/EditMedia";
 
 
 const root = ReactDOM.createRoot(
@@ -32,7 +34,12 @@ root.render(
                     <Route path="weather" element={<Weather />} />
                     <Route path="profile" element={<Profile />}>
                         <Route path="details" element={<Details />}/>
-                        <Route path="my_media" element={<MyMedia />}/>
+                        <Route path="my_media" element={<MyMedia />}>
+                            <Route path="add_new_media" element={<PostMedia />}/>
+                            <Route path="edit_media" element={<EditMedia />}>
+                                <Route path=":mediaId" element={<EditMedia />}/>
+                            </Route>
+                        </Route>
                         <Route path="private_chat" element={<PrivateChats />}/>
                     </Route>
                     <Route path="searchResult" element={<SearchResult />}/>
@@ -41,17 +48,6 @@ root.render(
                     <Route path="media" element={<MediaElement />}>
                         <Route path=":mediaId" element={<MediaElement />} />
                     </Route>
-                    {/*</Route>*/}
-                    {/*<Route path="last10" element={<Last10 />}>*/}
-                    {/*    <Route path=":mediaId" element={<Media />} />*/}
-                    {/*</Route>*/}
-                    {/*<Route path="search_video" element={<SearchVideo />}>*/}
-                    {/*    <Route path=":mediaId" element={<Media />} />*/}
-                    {/*</Route>*/}
-                    {/*<Route path="profile" element={<Profile />} >*/}
-                    {/*    <Route path="details" element={<Details />} />*/}
-                    {/*    <Route path="private_chat" element={<PrivateChat />} />*/}
-                    {/*</Route>*/}
                 </Route>
                 <Route path="*" element={<NoMatch />} />
             </Routes>

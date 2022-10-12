@@ -9,6 +9,9 @@
     width: 70%;
     border-radius: 20px;
 }
+.input-block {
+    display: flex;
+}
 
 .btn-send-message {
     height: 100%;

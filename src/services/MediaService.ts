@@ -94,7 +94,7 @@ export const mediaAPI = createApi({
         }),
         updateMediaRating: build.mutation<MediaRating, MediaRating>({
             query: (data, ) => ({
-                url: `/api/v1/rating/`,
+                url: `/api/v1/rating/${data.id}/`,
                 headers: {
                     Authorization: 'Token '+data.token,
                 },

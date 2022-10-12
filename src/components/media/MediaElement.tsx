@@ -12,24 +12,22 @@ export const MediaElement:React.FC = () => {
 
     const {token, details} = useAppSelector(state => state.userReducer)
     const {rating: storeRating} = useAppSelector(state => state.rateReducer)
-    const [updateRatingMedia, {data: dataUpdate}] = mediaAPI.useUpdateMediaRatingMutation();
-    const [newRatingMedia, {data: dataNew}] = mediaAPI.usePostMediaRatingMutation();
+    const [updateRatingMedia, ] = mediaAPI.useUpdateMediaRatingMutation();
+    const [newRatingMedia, ] = mediaAPI.usePostMediaRatingMutation();
     const {data: media} = mediaAPI.useGetMediaQuery(
         {
             token: (token)?token:'',
             id: (params.mediaId)?params.mediaId:'',
         }
     );
-    const {data: ratingData} = mediaAPI.useGetMediaRatingQuery(
-        {
-            token: (token)?token:'',
-            media: (media && media.id)?media.id:0,
-            author: (details && details.pk)?details.pk:0,
-        }
-    );
 
+    const requestRatingData = {
+        token: (token)?token:'',
+        media: (params.mediaId)?Number(params.mediaId):0,
+        author: (details && details.pk)?details.pk:0,
+    }
 
-
+    const {data: ratingData} = mediaAPI.useGetMediaRatingQuery(requestRatingData);
 
     let [rating, setRating] = useState(storeRating);
 
@@ -37,32 +35,40 @@ export const MediaElement:React.FC = () => {
     const {setMediaRatingData} = rateSlice.actions;
 
     useEffect(() => {
-        if (ratingData) {
-            dispatch(setMediaRatingData(ratingData))
-            setRating(ratingData.rating)
+        // @ts-ignore
+        if (ratingData && ratingData[0].rating) {
+            // @ts-ignore
+            dispatch(setMediaRatingData(ratingData[0].rating))
+            // @ts-ignore
+            setRating(ratingData[0].rating)
         } else {
             const currentRating: MediaRating = {
-                media: (media && media.id) ? media.id : 0,
+                media: (params.mediaId)?Number(params.mediaId):0,
                 author: (details && details.pk) ? details.pk : 0,
                 rating: (media && media.current_rating) ? media.current_rating : 0,
             }
             setRating((media && media.current_rating) ? media.current_rating : 0)
             dispatch(setMediaRatingData(currentRating))
         }
-    })
+    },[ratingData, details, media, params.mediaId, dispatch, setMediaRatingData, setRating])
     // Catch Rating value
     const handleRating = (rate: number) => {
         setRating(rate);
         const newRating:MediaRating = {
-            media: (media && media.id)?media.id:0,
+            // @ts-ignore
+            id: (ratingData && ratingData[0].id)?Number(ratingData[0].id):undefined,
+            media: (params.mediaId)?Number(params.mediaId):0,
             author: (details && details.pk)?details.pk:0,
             rating: rate,
             token: (token)?token:'',
         }
-        try {
-            newRatingMedia(newRating);
-        } catch {
+        console.log(newRating);
+        if (newRating.id) {
+            console.log('update');
             updateRatingMedia(newRating);
+        } else {
+            console.log('new rate');
+            newRatingMedia(newRating);
         }
     }
 
@@ -86,7 +92,7 @@ export const MediaElement:React.FC = () => {
             <div className="movie-card-description">
                 {media && media.description && media.description}
             </div>
-            <ChatWindow media={(media && media.id)? media.id : 0} />
+            <ChatWindow media={(params.mediaId)?Number(params.mediaId):0} />
         </div>
     )
 }
