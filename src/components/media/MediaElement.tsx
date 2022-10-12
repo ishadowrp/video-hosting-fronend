@@ -62,12 +62,9 @@ export const MediaElement:React.FC = () => {
             rating: rate,
             token: (token)?token:'',
         }
-        console.log(newRating);
         if (newRating.id) {
-            console.log('update');
             updateRatingMedia(newRating);
         } else {
-            console.log('new rate');
             newRatingMedia(newRating);
         }
     }
