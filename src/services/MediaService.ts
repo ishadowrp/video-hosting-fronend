@@ -6,7 +6,7 @@ import {
     SearchService,
     SimpleMediaRequest,
     MediaRatingRequest,
-    CommentsRequest, CommentResponse, SearchMediaByAuthor
+    CommentsRequest, CommentResponse, SearchMediaByAuthor, MediaViewsCount
 } from "../types/IMedia";
 import {readCookie} from "./Service";
 
@@ -25,7 +25,7 @@ export const mediaAPI = createApi({
             return headers
         },
     }),
-    tagTypes: ['Media'],
+    tagTypes: ['Media', 'MediaList', 'Comments', 'Rating', 'RatingList'],
     endpoints: (build) => ({
         fetchAllMedia: build.query<MediaUnit[], string>({
             query: (token) => ({
@@ -34,7 +34,7 @@ export const mediaAPI = createApi({
                     Authorization: 'Token '+token,
                 }
             }),
-            providesTags: result => ['Media']
+            providesTags: ['MediaList']
         }),
         fetchLast10: build.query<MediaUnit[], string>({
             query: (token) => ({
@@ -43,7 +43,7 @@ export const mediaAPI = createApi({
                     Authorization: 'Token '+token,
                 }
             }),
-            providesTags: result => ['Media']
+            providesTags: ['MediaList']
         }),
         fetchMostPopular: build.query<MediaUnit[], string>({
             query: (token) => ({
@@ -52,7 +52,7 @@ export const mediaAPI = createApi({
                     Authorization: 'Token '+token,
                 }
             }),
-            providesTags: result => ['Media']
+            providesTags: ['MediaList']
         }),
         fetchSearch: build.query<MediaUnit[], SearchService>({
             query: (searchData) => ({
@@ -61,7 +61,7 @@ export const mediaAPI = createApi({
                     Authorization: 'Token '+searchData.token,
                 }
             }),
-            providesTags: result => ['Media']
+            providesTags: ['MediaList']
         }),
         getMediaByAuthor: build.query<MediaUnit[], SearchMediaByAuthor>({
             query: (request) => ({
@@ -70,7 +70,7 @@ export const mediaAPI = createApi({
                     Authorization: 'Token '+request.token,
                 }
             }),
-            providesTags: result => ['Media']
+            providesTags: ['MediaList']
         }),
         getCommentsByMedia: build.query<CommentResponse[], CommentsRequest>({
             query: (request) => ({
@@ -79,7 +79,7 @@ export const mediaAPI = createApi({
                     Authorization: 'Token '+request.token,
                 }
             }),
-            providesTags: result => ['Media']
+            providesTags: ['Comments']
         }),
         postMediaRating: build.mutation<MediaRating, MediaRating>({
             query: (rating, ) => ({
@@ -90,7 +90,7 @@ export const mediaAPI = createApi({
                 method: 'POST',
                 body: rating,
             }),
-            invalidatesTags: ['Media']
+            invalidatesTags: ['Rating']
         }),
         updateMediaRating: build.mutation<MediaRating, MediaRating>({
             query: (data, ) => ({
@@ -101,7 +101,7 @@ export const mediaAPI = createApi({
                 method: 'PUT',
                 body: data,
             }),
-            invalidatesTags: ['Media']
+            invalidatesTags: ['Rating']
         }),
         getMediaRating: build.query<MediaRating[], MediaRatingRequest>({
             query: (rating, ) => ({
@@ -114,7 +114,7 @@ export const mediaAPI = createApi({
                     author: rating.author,
                 },
             }),
-            providesTags: ['Media']
+            providesTags: ['RatingList']
         }),
         createMedia: build.mutation<MediaUnit, IMedia>({
             query: (media, ) => ({
@@ -134,11 +134,11 @@ export const mediaAPI = createApi({
                     Authorization: 'Token '+media.token,
                 },
             }),
-            providesTags: result => ['Media']
+            providesTags: ['Media']
         }),
         updateMedia: build.mutation<MediaUnit, IMedia>({
             query: (media, ) => ({
-                url: `/api/v1/media/${media.media.id}`,
+                url: `/api/v1/media/${media.media.id}/`,
                 headers: {
                     Authorization: 'Token '+media.token,
                 },
@@ -146,6 +146,17 @@ export const mediaAPI = createApi({
                 body: media.media
             }),
             invalidatesTags: ['Media']
+        }),
+        updateCountViews: build.mutation<MediaUnit, MediaViewsCount>({
+            query: (media, ) => ({
+                url: `/api/v1/media/${media.media.id}/`,
+                headers: {
+                    Authorization: 'Token '+media.token,
+                },
+                method: 'PATCH',
+                body: media.media
+            }),
+            invalidatesTags: ['Media', 'MediaList']
         }),
         deleteMedia: build.mutation<MediaUnit, IMedia>({
             query: (media, ) => ({

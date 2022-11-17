@@ -80,3 +80,13 @@ export interface MediaComponentProps {
     authorID: number,
     mediaCurrentRating: number
 }
+
+export interface ViewsMedia {
+    id: number,
+    views_count: number
+}
+
+export interface MediaViewsCount {
+    token: string,
+    media: ViewsMedia
+}

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import searchButton from '../../img/search-button.svg';
 import {Link} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {useAppDispatch} from "../../hooks/redux";
 import {mediaSlice} from "../../store/reducers/MediaSlice";
 
 

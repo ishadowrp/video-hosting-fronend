@@ -1,33 +1,31 @@
 import {MenuSection} from "../navigations/MenuSection";
 import {useAppSelector} from "../../hooks/redux";
-import {MediaUnit} from "../../types/IMedia";
-import {Media} from "./Media";
 import './media.css';
 import {mediaAPI} from "../../services/MediaService";
+import GetMedia from "./getMedia";
 
 export const SearchResult:React.FC = () => {
 
     const {token} = useAppSelector(state => state.userReducer)
     const {searchText} = useAppSelector(state => state.mediaReducer);
-    const {data: medias} = mediaAPI.useFetchSearchQuery({token: token, searchString: searchText});
+    const {data: medias, isLoading} = mediaAPI.useFetchSearchQuery({token: token, searchString: searchText});
 
-    const getMedia = (): JSX.Element => {
+    if (isLoading) {
         return (
-            <div className="movie-cards">
-                {medias && medias.map((media:MediaUnit) =>
-                    <Media key={media.id} media={media}/>)}
+            <div>
+                Searching.....
             </div>
         )
+    } else {
+        return (
+            <MenuSection
+                icon="fa-regular fa-pot-food"
+                id="media-section"
+                title="Search results..."
+            >
+                {(medias&&medias.length !== 0)?<GetMedia medias = {medias} />
+                    :<h4 className='quick-nav-item-label'>No result founds!</h4>}
+            </MenuSection>
+        );
     }
-
-
-    return (
-        <MenuSection
-            icon="fa-regular fa-pot-food"
-            id="media-section"
-            title="Search results..."
-        >
-            {medias&&medias.length ===0?<h4 className='quick-nav-item-label'>No result founds!</h4>:getMedia()}
-        </MenuSection>
-    );
 }
