@@ -4,7 +4,6 @@ import {mediaAPI} from "../../services/MediaService";
 import {useParams} from "react-router-dom";
 
 export const EditMedia:React.FC = () => {
-    console.log('переход')
     let params = useParams();
 
     const {token} = useAppSelector(state => state.userReducer)

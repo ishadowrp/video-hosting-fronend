@@ -11,7 +11,6 @@ export const UserStatusButton: React.FC<IUserStatusButton> = (
     const {setStatus} = appSlice.actions;
 
     const handleOnClick = (): void => {
-        console.log(props.userStatus)
         dispatch(setStatus(props.userStatus));
     };
 

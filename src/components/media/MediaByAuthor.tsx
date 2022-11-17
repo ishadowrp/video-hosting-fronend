@@ -1,6 +1,6 @@
 import React from "react";
 import {MediaFC} from "../../types/IMedia";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 
 export function MediaByAuthor(props:MediaFC) {
 
@@ -21,7 +21,7 @@ export function MediaByAuthor(props:MediaFC) {
             <div className='nav-bar my-media-buttons'>
                 <button className='quick-nav-item clear-button quick-nav-item-label'>Delete</button>
                 <div className='quick-nav-item clear-button'>
-                    <Link to={`edit_media/${props.media.id}`} className='quick-nav-item-label'>Edit</Link>
+                    <NavLink to={`edit_media/${props.media.id}`} className='quick-nav-item-label'>Edit</NavLink>
                 </div>
             </div>
         </div>

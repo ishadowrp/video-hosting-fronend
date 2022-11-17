@@ -9,16 +9,9 @@ import {mediaAPI} from "../../services/MediaService";
 export function ChatWindow(props: ChatProps) {
 
     const {token} = useAppSelector(state => state.userReducer)
-    const {data: comments} = mediaAPI.useGetCommentsByMediaQuery({token:token?token:'', media:String(props.media)});
+    const {data: comments, isLoading} = mediaAPI.useGetCommentsByMediaQuery({token:token?token:'', media:String(props.media)});
     const socketUrl = 'ws://127.0.0.1:8000/ws/media/'+props.media+'/?token='+token;
-    const [messageHistory, setMessageHistory] = useState(comments?comments.map(comment => ({
-        created: comment.date_posted,
-        message: comment.content,
-        type: '',
-        current_rating: comment.current_rating,
-        userID: comment.author,
-        username: comment.username
-     })):[{
+    const [messageHistory, setMessageHistory] = useState([{
             created: '',
             message: '',
             type: '',
@@ -27,14 +20,32 @@ export function ChatWindow(props: ChatProps) {
             username: ''}]
     );
 
+    useEffect(() => {
+        setMessageHistory(comments?comments.map(comment => ({
+                created: comment.date_posted,
+                message: comment.content,
+                type: '',
+                current_rating: comment.current_rating,
+                userID: comment.author,
+                username: comment.username
+            })):[{
+                created: '',
+                message: '',
+                type: '',
+                current_rating: 0,
+                userID: '',
+                username: ''}]
+        )
+    }, [comments, isLoading]);
+
     let [newMessage, setNewMessage] = useState('');
 
     const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl);
 
     useEffect(() => {
         if (lastJsonMessage !== null) {
-            console.log(lastJsonMessage)
             setMessageHistory((prev:any) => prev.concat(lastJsonMessage));
+            setNewMessage('');
         }
     }, [lastJsonMessage, setMessageHistory]);
 
@@ -46,14 +57,6 @@ export function ChatWindow(props: ChatProps) {
             type_chat: 'comment',
             message: newMessage}
         ),[newMessage, sendJsonMessage]);
-
-    // const connectionStatus = {
-    //     [ReadyState.CONNECTING]: 'Connecting',
-    //     [ReadyState.OPEN]: 'Open',
-    //     [ReadyState.CLOSING]: 'Closing',
-    //     [ReadyState.CLOSED]: 'Closed',
-    //     [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-    // }[readyState];
 
     return (
         <div className='chat-wrapper'>

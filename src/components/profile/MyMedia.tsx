@@ -3,8 +3,8 @@ import {useAppSelector} from "../../hooks/redux";
 import {mediaAPI} from "../../services/MediaService";
 import {MediaUnit} from "../../types/IMedia";
 import {MenuSection} from "../navigations/MenuSection";
-import {MediaByAuthor} from "./MediaByAuthor";
-import {Link} from "react-router-dom";
+import {MediaByAuthor} from "../media/MediaByAuthor";
+import {Link, Outlet} from "react-router-dom";
 
 export const MyMedia:React.FC = () => {
 
@@ -22,12 +22,13 @@ export const MyMedia:React.FC = () => {
 
 
     return (
-        <React.Fragment>
+        <div>
             <div className="nav-bar add-new-media-box">
                 <div className='quick-nav-item clear-button'>
                     <Link to='add_new_media' className='quick-nav-item-label'>Add new media</Link>
                 </div>
             </div>
+            <Outlet />
             <MenuSection
                 icon="fa-regular fa-pot-food"
                 id="media-section"
@@ -35,7 +36,6 @@ export const MyMedia:React.FC = () => {
             >
                 {medias&&medias.length ===0?<h4 className='quick-nav-item-label'>No result founds!</h4>:getMedia()}
             </MenuSection>
-
-        </React.Fragment>
+        </div>
     );
 }

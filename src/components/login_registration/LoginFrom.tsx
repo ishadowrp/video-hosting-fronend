@@ -61,11 +61,11 @@ export function LoginForm() {
     return (
         <form className='form-login' method='post'>
             <div className="user-box">
-                <input type="text" name="username" value={logUsername} onChange={handleOnChangeUsername}/>
+                <input type="text" name="username" autoComplete="username" value={logUsername} onChange={handleOnChangeUsername}/>
                 <label>Username</label>
             </div>
             <div className="user-box">
-                <input type="password" name="password" value={logPassword} onChange={handleOnChangePassword}/>
+                <input type="password" name="password" autoComplete="current-password" value={logPassword} onChange={handleOnChangePassword}/>
                 <label>Password</label>
             </div>
 

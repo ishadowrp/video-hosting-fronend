@@ -69,3 +69,14 @@ export interface SimpleMediaRequest {
     token: string,
     id: string,
 }
+
+export interface MediasProps {
+    medias: MediaUnit[]
+}
+
+export interface MediaComponentProps {
+    token: string,
+    mediaID: number|undefined,
+    authorID: number,
+    mediaCurrentRating: number
+}

@@ -103,7 +103,7 @@ export const mediaAPI = createApi({
             }),
             invalidatesTags: ['Media']
         }),
-        getMediaRating: build.query<MediaRating, MediaRatingRequest>({
+        getMediaRating: build.query<MediaRating[], MediaRatingRequest>({
             query: (rating, ) => ({
                 url: `/api/v1/rating/`,
                 headers: {

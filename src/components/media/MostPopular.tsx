@@ -1,24 +1,13 @@
 import {MenuSection} from "../navigations/MenuSection";
 import {useAppSelector} from "../../hooks/redux";
 import {mediaAPI} from "../../services/MediaService";
-import {MediaUnit} from "../../types/IMedia";
-import {Media} from "./Media";
 import './media.css';
+import GetMedia from "./getMedia";
 
 export const MostPopular:React.FC = () => {
 
     const {token} = useAppSelector(state => state.userReducer);
-    const {data: medias} = mediaAPI.useFetchMostPopularQuery(token?token:'');
-
-    const getMedia = (): JSX.Element => {
-        return (
-            <div className="movie-cards">
-                {medias && medias.map((media:MediaUnit) =>
-                    <Media key={media.id} media={media}/>)}
-            </div>
-        )
-    }
-
+    const {data: medias, isLoading} = mediaAPI.useFetchMostPopularQuery(token?token:'');
 
     return (
         <MenuSection
@@ -26,7 +15,9 @@ export const MostPopular:React.FC = () => {
             id="media-section"
             title="Most popular videos..."
         >
-            {getMedia()}
+            {isLoading?
+                <div>Loading.....</div>
+                :medias?<GetMedia medias = {medias} />:""}
         </MenuSection>
     );
 }

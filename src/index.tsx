@@ -16,7 +16,7 @@ import {MostPopular} from "./components/media/MostPopular";
 import {MediaElement} from "./components/media/MediaElement";
 import {Last10} from "./components/media/Last10";
 import {SearchResult} from "./components/media/SearchResult";
-import {PostMedia} from "./components/media/PostMedia";
+import {AddNewMedia} from "./components/media/PostMedia";
 import {EditMedia} from "./components/media/EditMedia";
 
 
@@ -34,8 +34,9 @@ root.render(
                     <Route path="weather" element={<Weather />} />
                     <Route path="profile" element={<Profile />}>
                         <Route path="details" element={<Details />}/>
+                        <Route path="add_new_media" element={<AddNewMedia />}/>
                         <Route path="my_media" element={<MyMedia />}>
-                            <Route path="add_new_media" element={<PostMedia />}/>
+                            <Route path="add_new_media" element={<AddNewMedia />}/>
                             <Route path="edit_media" element={<EditMedia />}>
                                 <Route path=":mediaId" element={<EditMedia />}/>
                             </Route>
