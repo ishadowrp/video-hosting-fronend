@@ -37,7 +37,6 @@ export const Details:React.FC = () => {
         }
     }, [details, isLoading]);
 
-    console.log(verifiedPhone)
     const handleOnChangeUsrUsername = (e:React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
     }
