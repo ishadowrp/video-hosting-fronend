@@ -1,5 +1,5 @@
 export interface UsernameID {
-    username: string,
+    id: string,
     token: string,
 }
 
@@ -9,6 +9,7 @@ export interface UserProfile {
     telephone: string,
     avatar: string,
     token?: string,
+    telephone_verified: boolean,
 }
 
 export interface VerificationRequest {

@@ -19,21 +19,24 @@ export const profileAPI = createApi({
     tagTypes: ['Profile'],
     endpoints: (build) => ({
         userProfile: build.query<UserProfile, UsernameID>({
-            query: (id) => ({
-                url: `/api/v1/users/profile/${id}/`,
+            query: (request) => ({
+                url: `/api/v1/users/profiles/${request.id}/`,
+                headers: {
+                    Authorization: 'Token '+request.token,
+                }
             }),
-            providesTags: result => ['Profile']
+            providesTags: ['Profile']
         }),
         updateProfile: build.mutation<UserProfile, UserProfile>({
             query: (profile_data) => ({
-                url: `api/v1/users/profile/${profile_data.id}/`,
+                url: `/api/v1/users/profiles/${profile_data.id}/`,
                 method: 'PATCH',
                 headers: {
                     Authorization: 'Token '+profile_data.token,
                 },
                 body: profile_data,
             }),
-            invalidatesTags: result => ['Profile']
+            invalidatesTags: ['Profile']
         }),
         updateAvatar: build.mutation<string, UserProfile>({
             query: (data) => ({
@@ -41,14 +44,14 @@ export const profileAPI = createApi({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags: result => ['Profile']
+            invalidatesTags: ['Profile']
         }),
         deleteAvatar: build.mutation<string, UserProfile>({
             query: (data) => ({
                 url: '/api/v1//users/profiles/image/',
                 method: 'DELETE',
             }),
-            invalidatesTags: result => ['Profile']
+            invalidatesTags: ['Profile']
         }),
         verificationPhone: build.mutation<VerificationRequest, VerificationRequest>({
             query: (data) => ({

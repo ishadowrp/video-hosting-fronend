@@ -8,7 +8,6 @@ const initialState: AuthUserDetails = {
         pk: 0,
         first_name: '',
         last_name: '',
-        telephone: '',
     },
     token: '',
 }

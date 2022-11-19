@@ -1,40 +1,43 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {MenuSection} from "../navigations/MenuSection";
-import {authAPI} from "../../services/AuthService";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {userSlice} from "../../store/reducers/UserSlice";
 import personImg from '../../img/person.svg';
 import uploadImg from '../../img/upload.svg';
 import trashImg from '../../img/trash-fill.svg';
 import './profile.css';
+import {profileAPI} from "../../services/ProfileService";
 
 
 export const Details:React.FC = () => {
 
-    const {token} = useAppSelector(state => state.userReducer);
-    const {data: details} = authAPI.useGetUserQuery(token?token:'');
+    const {token, details} = useAppSelector(state => state.userReducer);
+    let requestProfile = {
+        'token': (token&&details)?token:'',
+        'id': (token&&details)?String(details.pk):'',
+    }
+    const {data: extDetails, isLoading} = profileAPI.useUserProfileQuery(requestProfile);
     const [usrUsername, setUsername] = useState<string>(details?details.username:'')
     const [usrEmail, setEmail] = useState<string|undefined>(details?details.email:'')
     const [usrFirstName, setFirstName] = useState<string|undefined>(details?details.first_name:'')
     const [usrLastName, setLastName] = useState<string|undefined>(details?details.last_name:'')
-    const [usrPhone, setPhone] = useState<string|undefined>(details?details.telephone:'')
+    const [usrPhone, setPhone] = useState<string|undefined>('')
+    const [usrPin, setPin] = useState<string|undefined>('')
+    const [avatarUrl, setAvatarUrl] = useState<string|undefined>(personImg);
+    const [verifiedPhone, setVerifiedPhone] = useState<boolean|undefined>(false);
 
     const dispatch = useAppDispatch();
     const {setUserDetails} = userSlice.actions;
 
-    let avatarUrl = '';
-
-    if (details) {
-        if (details.avatarUrl) {
-            avatarUrl = details.avatarUrl;
-        } else {
-            avatarUrl = personImg;
+    useEffect(() => {
+        if (!isLoading) {
+            setAvatarUrl(extDetails?extDetails.avatar:personImg);
+            setPhone(extDetails?extDetails.telephone:'')
+            setVerifiedPhone(extDetails?extDetails.telephone_verified:false)
         }
-        dispatch(setUserDetails(details))
-    } else {
-        avatarUrl = personImg;
-    }
+    }, [details, isLoading]);
 
+    console.log(verifiedPhone)
     const handleOnChangeUsrUsername = (e:React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
     }
@@ -54,6 +57,11 @@ export const Details:React.FC = () => {
     const handleOnChangeUsrPhone = (e:React.ChangeEvent<HTMLInputElement>) => {
         setPhone(e.target.value);
     }
+
+    const handleOnChangeUsrPin = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setPin(e.target.value);
+    }
+
 
     const getDetailsInfo = () :JSX.Element => {
         return (
@@ -91,15 +99,18 @@ export const Details:React.FC = () => {
                             <label className='details-label'>Phone</label>
                             <input type="text" className='quick-nav-item clear-button new-media-input' name="telephone" value={usrPhone} onChange={handleOnChangeUsrPhone}/>
                         </div>
-                        <div className="details-input-block">
-                            <div id='pin-phone-block' className="details-input-block">
-                                <label className='details-label'>Pin</label>
-                                <input type="text" className='quick-nav-item clear-button new-media-input pin' name="telephone" value={usrPhone} onChange={handleOnChangeUsrPhone}/>
+                        {verifiedPhone?
+                        '':
+                            <div className="details-input-block">
+                                <div id='pin-phone-block' className="details-input-block">
+                                    <label className='details-label'>Pin</label>
+                                    <input type="text" className='quick-nav-item clear-button new-media-input pin' name="telephone" value={usrPin} onChange={handleOnChangeUsrPin}/>
+                                </div>
+                                <div className='nav-bar verify-phone'>
+                                    <button className='quick-nav-item clear-button quick-nav-item-label'>Verify phone</button>
+                                </div>
                             </div>
-                            <div className='nav-bar verify-phone'>
-                                <button className='quick-nav-item clear-button quick-nav-item-label'>Verify phone</button>
-                            </div>
-                        </div>
+                        }
                     </div>
                     <div className='nav-bar app-details-buttons'>
                         <button className='quick-nav-item clear-button quick-nav-item-label'>Update</button>

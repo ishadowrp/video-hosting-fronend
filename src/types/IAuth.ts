@@ -22,8 +22,6 @@ export interface UserDetails{
     email?: string,
     first_name?: string,
     last_name?: string,
-    telephone?: string,
-    avatarUrl?: string
 }
 
 export interface AuthUserDetails {
