@@ -13,8 +13,8 @@ export const Details:React.FC = () => {
 
     const {token, details} = useAppSelector(state => state.userReducer);
     let requestProfile = {
-        'token': (token&&details)?token:'',
-        'id': (token&&details)?String(details.pk):'',
+        'token': token?token:'',
+        'id': details?String(details.pk):'',
     }
     const {data: extDetails, isLoading} = profileAPI.useUserProfileQuery(requestProfile);
     const [usrUsername, setUsername] = useState<string>(details?details.username:'')
