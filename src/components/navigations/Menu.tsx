@@ -26,10 +26,6 @@ export const Menu: React.FC = () => {
                     </div>
                     <QuickNav />
                     <Outlet />
-                    {/*<Weather />*/}
-                    {/*<Restaurants />*/}
-                    {/*<Tools />*/}
-                    {/*<Movies />*/}
                 </div>
             </div>
         </div>

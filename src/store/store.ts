@@ -3,6 +3,7 @@ import {mediaAPI} from "../services/MediaService";
 import {authAPI} from "../services/AuthService";
 import userReducer from './reducers/UserSlice';
 import appReducer from './reducers/AppSlice';
+import profileReducer from './reducers/ProfileSlice';
 import rateReducer from './reducers/RateSlice';
 import mediaReducer from './reducers/MediaSlice';
 import {profileAPI} from "../services/ProfileService";
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     appReducer,
     rateReducer,
     mediaReducer,
+    profileReducer,
     [mediaAPI.reducerPath]: mediaAPI.reducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [profileAPI.reducerPath]: profileAPI.reducer,

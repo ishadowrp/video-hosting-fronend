@@ -1,6 +1,9 @@
-import {Default, IAppContext, ILogInUtility, INumberUtility, IPosition, ITimeUtility} from "./types";
+import {INumberUtility, IPosition, ITimeUtility} from "./types";
 import React from "react";
 
+export const backendURL = 'http://127.0.0.1:8000';
+
+export const webSocketUrl = 'ws://127.0.0.1:8000';
 
 export const defaultPosition = (): IPosition => ({
     left: 0,
@@ -30,20 +33,6 @@ export const T: ITimeUtility = {
     }
 };
 
-export const LogInUtility: ILogInUtility = {
-    verify: async (pin: string): Promise<boolean> => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                if (pin === Default.PIN) {
-                    resolve(true);
-                } else {
-                    reject(`Invalid pin: ${pin}`);
-                }
-            }, N.rand(300, 700));
-        });
-    }
-};
-
 export const useCurrentDateEffect = (): Date => {
     const [date, setDate] = React.useState<Date>(new Date());
 
@@ -62,4 +51,3 @@ export const useCurrentDateEffect = (): Date => {
     return date;
 };
 
-export const AppContext = React.createContext<IAppContext|any>(null);

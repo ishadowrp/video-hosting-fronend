@@ -1,11 +1,12 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
-import {UsernameID, UserProfile, VerificationRequest} from "../types/IProfile";
+import {ImageUploadType, UserAvatar, UsernameID, UserProfile, VerificationRequest} from "../types/IProfile";
 import {readCookie} from "./Service";
+import {backendURL} from "../types/constants";
 
 
 export const profileAPI = createApi({
     reducerPath: 'profileAPI',
-    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8000',
+    baseQuery: fetchBaseQuery({baseUrl: backendURL,
         prepareHeaders: (headers) => {
             const crfToken = readCookie('csrftoken');
 
@@ -16,7 +17,7 @@ export const profileAPI = createApi({
 
             return headers
         },},),
-    tagTypes: ['Profile'],
+    tagTypes: ['Profile', 'Avatar', 'Verification'],
     endpoints: (build) => ({
         userProfile: build.query<UserProfile, UsernameID>({
             query: (request) => ({
@@ -38,20 +39,36 @@ export const profileAPI = createApi({
             }),
             invalidatesTags: ['Profile']
         }),
-        updateAvatar: build.mutation<string, UserProfile>({
-            query: (data) => ({
-                url: '/api/v1//users/profiles/image/',
-                method: 'POST',
-                body: data,
+        getAvatar: build.query<UserAvatar, ImageUploadType>({
+            query: (request) => ({
+                url: '/api/v1/profiles/image/',
+                headers: {
+                    'authorization': 'Token '+request.token,
+                },
             }),
-            invalidatesTags: ['Profile']
+            providesTags: ['Avatar']
         }),
-        deleteAvatar: build.mutation<string, UserProfile>({
+        uploadAvatar: build.mutation<UserAvatar, ImageUploadType>({
+            query: (request) => ({
+                url: '/api/v1/profiles/image/',
+                headers: {
+                    'Authorization': 'Token '+request.token,
+                    'Content-type': 'multipart/form-data'
+                },
+                method: 'POST',
+                body: request.data,
+            }),
+            invalidatesTags: ['Avatar']
+        }),
+        deleteAvatar: build.mutation<string, string>({
             query: (data) => ({
-                url: '/api/v1//users/profiles/image/',
+                url: '/api/v1/profiles/image/',
+                headers: {
+                    'authorization': 'Token '+data,
+                },
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Profile']
+            invalidatesTags: ['Avatar']
         }),
         verificationPhone: build.mutation<VerificationRequest, VerificationRequest>({
             query: (data) => ({
@@ -62,7 +79,7 @@ export const profileAPI = createApi({
                 method: 'PATCH',
                 body: data
             }),
-            invalidatesTags: ['Profile']
+            invalidatesTags: ['Verification']
         }),
     })
 })

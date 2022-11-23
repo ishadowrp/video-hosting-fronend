@@ -84,3 +84,7 @@ export interface IUserStatusButton {
     id: string;
     userStatus: UserStatus;
 }
+
+export interface AppWrapperProps {
+    status: UserStatus,
+}

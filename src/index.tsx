@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/index.css';
-import App from './components/App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import {setupStore} from "./store/store";
 import {Provider} from "react-redux";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Weather} from "./components/service/Weather";
 import {Profile} from "./components/profile/Profile";
 import {Details} from "./components/profile/Details";
@@ -18,6 +17,7 @@ import {Last10} from "./components/media/Last10";
 import {SearchResult} from "./components/media/SearchResult";
 import {AddNewMedia} from "./components/media/PostMedia";
 import {EditMedia} from "./components/media/EditMedia";
+import App from "./components/App";
 
 
 const root = ReactDOM.createRoot(

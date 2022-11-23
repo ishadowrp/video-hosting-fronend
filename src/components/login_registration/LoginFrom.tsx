@@ -10,7 +10,7 @@ import {appSlice} from "../../store/reducers/AppSlice";
 export function LoginForm() {
 
     const [loginUser, {data, error}] = authAPI.useLoginUserMutation();
-    const {data: detailsData} = authAPI.useGetUserQuery((data && data.key)?data.key:'');
+    const {data: detailsData, isLoading} = authAPI.useGetUserQuery((data && data.key)?data.key:'');
 
     let [logUsername, setUsername] = useState<string>('');
     let [logPassword, setPassword] = useState<string>('');
@@ -44,11 +44,14 @@ export function LoginForm() {
     useEffect(() => {
         if (data) {
             dispatch(setToken(data.key));
-            if (detailsData) {
-                dispatch(setUserDetails(detailsData));
             }
+        if (detailsData) {
+            dispatch(setUserDetails(detailsData));
+            }
+        if (data&&detailsData) {
             dispatch(setStatus(UserStatus.LoggedIn));
-        }}
+            }
+        }, [data, detailsData, isLoading]
     )
 
     let errorMessage = '';
@@ -80,7 +83,7 @@ export function LoginForm() {
                     <span></span>
                     Log in
                 </a>
-                <a href="#" className='btn-log' onClick={handleOnClickCancel}>
+                <a href="#"  className='btn-log' onClick={handleOnClickCancel}>
                     <span></span>
                     <span></span>
                     <span></span>

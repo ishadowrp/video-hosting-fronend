@@ -6,6 +6,7 @@ const initialState: AuthUserDetails = {
     details: {
         username: 'anonymous',
         pk: 0,
+        email: '',
         first_name: '',
         last_name: '',
     },

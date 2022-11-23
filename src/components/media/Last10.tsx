@@ -3,6 +3,7 @@ import {useAppSelector} from "../../hooks/redux";
 import {mediaAPI} from "../../services/MediaService";
 import './media.css';
 import GetMedia from "./getMedia";
+import {Loading} from "../service/Loading";
 
 export const Last10:React.FC = () => {
 
@@ -17,7 +18,7 @@ export const Last10:React.FC = () => {
             title="Last 10..."
         >
             {isLoading?
-                <div>Loading.....</div>
+                <Loading />
                 :medias?<GetMedia medias = {medias} />:""}
         </MenuSection>
     );

@@ -1,17 +1,27 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ScrollableComponent} from "../tools/ScrollableComponent";
 import {Link} from "react-router-dom";
 import {useAppSelector} from "../../hooks/redux";
-import useWebSocket, {ReadyState} from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 import bellIcon from '../../img/notification-bell-white.svg';
 import './navigations.css';
 import {toast} from "react-toastify";
 import SearchForm from "./SearchForm";
+import {webSocketUrl} from "../../types/constants";
 
 export const QuickNav: React.FC = () => {
 
     const {token, details} = useAppSelector(state => state.userReducer)
-    const socketUrl = 'ws://127.0.0.1:8000/ws/notifications/'+details.username+'/?token='+token;
+    let [socketUrl, setSocketUrl] = useState(webSocketUrl+'/ws/notifications/anonymous'+'/?token='+token);
+
+    useEffect(() => {
+        if (details) {
+            let socketStr = webSocketUrl+'/ws/notifications/'+details.username+'/?token='+token;
+            setSocketUrl(socketStr);
+        }
+    }, [details]);
+
+    const { sendJsonMessage, lastJsonMessage } = useWebSocket(socketUrl);
     const notificationBlock = document.getElementById('notifications-bell')
     const [needBells, setNeedBell] = useState(false);
     const [messageHistory, setMessageHistory] = useState([{
@@ -24,8 +34,6 @@ export const QuickNav: React.FC = () => {
         type: "chat.message",
         username:''
     }]);
-
-    const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl);
 
     useEffect(() => {
         if (lastJsonMessage !== null) {
@@ -45,13 +53,6 @@ export const QuickNav: React.FC = () => {
         }
     }, [lastJsonMessage, setMessageHistory]);
 
-    const connectionStatus = {
-        [ReadyState.CONNECTING]: 'Connecting',
-        [ReadyState.OPEN]: 'Open',
-        [ReadyState.CLOSING]: 'Closing',
-        [ReadyState.CLOSED]: 'Closed',
-        [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-    }[readyState];
 
     const handleReadNotification = () => {
         messageHistory.map(message => message.message.status = true)
@@ -75,12 +76,12 @@ export const QuickNav: React.FC = () => {
                    <div className="quick-nav-item clear-button">
                         <Link to='profile' className="quick-nav-item-label">Profile</Link>
                     </div>
-                    <a href='#' className="quick-nav-item clear-button" onClick={handleReadNotification}>
+                    <button className="quick-nav-item clear-button" onClick={handleReadNotification}>
                         <img src={bellIcon} alt = 'notifications-bell'  className="quick-nav-item-label" />
                         <div id='notifications-bell' className={needBells?'notifications-counter-wrapper block-on':'notifications-counter-wrapper block-off'}>
                             <div className="notifications-counter">{messageHistory && messageHistory.filter(message => message.message.status === false).length}</div>
                         </div>
-                    </a>
+                    </button>
                 </React.Fragment>
             );
     };

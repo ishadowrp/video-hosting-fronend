@@ -9,11 +9,12 @@ import {
     CommentsRequest, CommentResponse, SearchMediaByAuthor, MediaViewsCount
 } from "../types/IMedia";
 import {readCookie} from "./Service";
+import {backendURL} from "../types/constants";
 
 export const mediaAPI = createApi({
     reducerPath: 'mediaAPI',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000',
+        baseUrl: backendURL,
         prepareHeaders: (headers) => {
             const crfToken = readCookie('csrftoken');
 

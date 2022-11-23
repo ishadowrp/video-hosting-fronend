@@ -9,11 +9,12 @@ import {
     UserDetails
 } from "../types/IAuth";
 import {readCookie} from "./Service";
+import {backendURL} from "../types/constants";
 
 
 export const authAPI = createApi({
     reducerPath: 'authAPI',
-    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:8000',
+    baseQuery: fetchBaseQuery({baseUrl: backendURL,
         prepareHeaders: (headers) => {
             const crfToken = readCookie('csrftoken');
 

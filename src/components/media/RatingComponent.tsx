@@ -4,7 +4,6 @@ import {MediaComponentProps, MediaRating} from "../../types/IMedia";
 import {mediaAPI} from "../../services/MediaService";
 
 const RatingComponent = ({token, mediaID, authorID, mediaCurrentRating}:MediaComponentProps) => {
-
     let [rating, setRating] = useState(mediaCurrentRating);
     const [updateRatingMedia, ] = mediaAPI.useUpdateMediaRatingMutation();
     const [newRatingMedia, ] = mediaAPI.usePostMediaRatingMutation();
@@ -15,8 +14,8 @@ const RatingComponent = ({token, mediaID, authorID, mediaCurrentRating}:MediaCom
         author: Number(authorID),
     }
 
-    const {data: ratingData, isLoading} = mediaAPI.useGetMediaRatingQuery(requestRatingData);
 
+    const {data: ratingData, isLoading} = mediaAPI.useGetMediaRatingQuery(requestRatingData, {refetchOnMountOrArgChange:true});
     useEffect(() => {
         if (!isLoading && ratingData) {
             setRating(ratingData[0].rating)

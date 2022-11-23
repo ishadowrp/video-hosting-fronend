@@ -5,12 +5,13 @@ import {useAppSelector} from "../../hooks/redux";
 import './chat.css';
 import {ChatHistory} from "./ChatHistory";
 import {mediaAPI} from "../../services/MediaService";
+import {webSocketUrl} from "../../types/constants";
 
 export function ChatWindow(props: ChatProps) {
 
     const {token} = useAppSelector(state => state.userReducer)
     const {data: comments, isLoading} = mediaAPI.useGetCommentsByMediaQuery({token:token?token:'', media:String(props.media)});
-    const socketUrl = 'ws://127.0.0.1:8000/ws/media/'+props.media+'/?token='+token;
+    const socketUrl = webSocketUrl+'/ws/media/'+props.media+'/?token='+token;
     const [messageHistory, setMessageHistory] = useState([{
             created: '',
             message: '',
